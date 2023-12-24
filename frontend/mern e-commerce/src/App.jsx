@@ -1,13 +1,18 @@
+import Header from "./components/Layout/Header/Header";
+import Policy from "./components/Layout/Policy/Policy";
+import Footer from "./components/Layout/Footer/Footer";
+import Sliders from "./components/Slider/Sliders";
+import Categories from "./components/Categories/Categories";
+import Products from "./components/Products/Products";
 import "./App.css";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Policy from "./components/Policy";
 
 function App() {
   return (
     <>
       <Header />
-      <h1>HELLO</h1>
+      <Sliders />
+      <Categories />
+      <Products />
       <Policy />
       <Footer />
     </>
