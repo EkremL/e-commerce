@@ -1,21 +1,18 @@
-import Header from "./components/Layout/Header/Header";
-import Policy from "./components/Layout/Policy/Policy";
-import Footer from "./components/Layout/Footer/Footer";
-import Sliders from "./components/Slider/Sliders";
-import Categories from "./components/Categories/Categories";
-import Products from "./components/Products/Products";
+import React from "react";
+// import HomePage from "./Pages/HomePage";
 import "./App.css";
+import AuthPage from "./Pages/AuthPage";
+// import ShopPage from "./Pages/ShopPage";
+// import ContactPage from "./Pages/ContactPage";
 
 function App() {
   return (
-    <>
-      <Header />
-      <Sliders />
-      <Categories />
-      <Products />
-      <Policy />
-      <Footer />
-    </>
+    <React.Fragment>
+      {/* <HomePage /> */}
+      {/* <ShopPage /> */}
+      {/* <ContactPage /> */}
+      <AuthPage />
+    </React.Fragment>
   );
 }
 
