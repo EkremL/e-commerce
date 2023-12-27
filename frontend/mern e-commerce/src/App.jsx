@@ -1,9 +1,12 @@
 import React from "react";
 // import HomePage from "./Pages/HomePage";
-import "./App.css";
-import AuthPage from "./Pages/AuthPage";
+// import CartPage from "./Pages/CartPage";
+// import AuthPage from "./Pages/AuthPage";
 // import ShopPage from "./Pages/ShopPage";
 // import ContactPage from "./Pages/ContactPage";
+import "./App.css";
+import BlogDetailsPage from "./Pages/BlogDetailsPage";
+// import BlogPage from "./Pages/BlogPage";
 
 function App() {
   return (
@@ -11,7 +14,10 @@ function App() {
       {/* <HomePage /> */}
       {/* <ShopPage /> */}
       {/* <ContactPage /> */}
-      <AuthPage />
+      {/* <AuthPage /> */}
+      {/* <CartPage /> */}
+      {/* <BlogPage /> */}
+      <BlogDetailsPage />
     </React.Fragment>
   );
 }
