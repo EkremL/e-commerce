@@ -1,15 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../components/Layout/Header/Header";
 import Footer from "../components/Layout/Footer/Footer";
 import PropTypes from "prop-types";
+import Search from "../components/Modals/Search/Search";
+import { useState } from "react";
+import Dialog from "../components/Modals/Dialog/Dialog";
 
 const MainLayout = ({ children }) => {
+  const [isSearchShow, setIsSearchShow] = useState(false);
+  const [isDialogShow, setIsDialogShow] = useState(false);
+
+  useEffect(() => {
+    const dialogStatus = localStorage.getItem("dialog")
+      ? JSON.parse(localStorage.getItem("dialog"))
+      : localStorage.setItem("dialog", JSON.stringify(true));
+
+    setTimeout(() => {
+      setIsDialogShow(dialogStatus);
+    }, 2000);
+  }, []);
+
   return (
-    <React.Fragment>
-      <Header />
+    <div className="main-layout">
+      <Dialog isDialogShow={isDialogShow} setIsDialogShow={setIsDialogShow} />
+      <Search isSearchShow={isSearchShow} setIsSearchShow={setIsSearchShow} />
+      {/*butona tıklandiginda açilmasi icin headerdeki search butonuna set
+      ediyoruz 2 component üzerinde işlem yapıldığı için buraya statei import
+      ettik */}
+      <Header setIsSearchShow={setIsSearchShow} />
       {children}
       <Footer />
-    </React.Fragment>
+    </div>
   );
 };
 

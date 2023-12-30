@@ -1,8 +1,8 @@
+import PropTypes from "prop-types";
+import React from "react";
 import "./Header.css";
 
-import React from "react";
-
-function Header() {
+function Header({ setIsSearchShow }) {
   return (
     <header>
       <div className="global-notification">
@@ -191,7 +191,10 @@ function Header() {
                 <a href="account.html" className="header-account">
                   <i className="bi bi-person"></i>
                 </a>
-                <button className="search-button">
+                <button
+                  className="search-button"
+                  onClick={() => setIsSearchShow(true)}
+                >
                   <i className="bi bi-search"></i>
                 </button>
                 <a href="#">
@@ -213,3 +216,7 @@ function Header() {
 }
 
 export default Header;
+
+Header.propTypes = {
+  setIsSearchShow: PropTypes.func,
+};
