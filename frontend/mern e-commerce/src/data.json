@@ -12,7 +12,8 @@
       "thumbs": [
         "img/products/product1/1.png",
         "img/products/product1/2.png",
-        "img/products/product1/3.png"
+        "img/products/product1/3.png",
+        "img/products/product1/2.png"
       ]
     }
   },
@@ -80,7 +81,7 @@
       "thumbs": [
         "img/products/product5/1.png",
         "img/products/product5/2.png",
-        "img/products/product5/3.png"
+        "img/products/product1/3.png"
       ]
     }
   }

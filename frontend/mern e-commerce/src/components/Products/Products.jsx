@@ -67,8 +67,8 @@ const Products = () => {
         <div className="product-wrapper product-carousel">
           {/* react slick kullanimi */}
           <Slider {...sliderSettings}>
-            {products.map((product) => (
-              <ProductItem product={product} key={product.id} />
+            {products.map((item) => (
+              <ProductItem product={item} key={item.id} />
             ))}
           </Slider>
         </div>

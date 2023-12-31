@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Info.css";
 
 const Info = () => {
+  const [activeColor, setActiveColor] = useState("blue");
+  const [activeSize, setActiveSize] = useState("XS");
+
+  const handleColorClick = (e, color) => {
+    e.preventDefault();
+    setActiveColor(color);
+  };
+
+  const handleSizeClick = (e, size) => {
+    e.preventDefault();
+    setActiveSize(size);
+  };
+
   return (
     <div className="product-info">
       <h1 className="product-title">Ridley High Waist</h1>
@@ -40,22 +53,50 @@ const Info = () => {
               <span>Color</span>
             </div>
             <div className="colors-wrapper">
-              <div className="color-wrapper">
-                <label className="blue-color">
+              <div
+                className={`color-wrapper ${
+                  activeColor === "blue" ? "active" : ""
+                }`}
+              >
+                <label
+                  className="blue-color"
+                  id="blue"
+                  onClick={(e) => handleColorClick(e, "blue")}
+                >
                   <input type="radio" name="product-color" />
                 </label>
               </div>
-              <div className="color-wrapper">
-                <label className="red-color">
+              <div
+                className={`color-wrapper ${
+                  activeColor === "red" ? "active" : ""
+                }`}
+              >
+                <label
+                  className="red-color"
+                  id="red"
+                  onClick={(e) => handleColorClick(e, "red")}
+                >
                   <input type="radio" name="product-color" />
                 </label>
               </div>
-              <div className="color-wrapper active">
+              <div
+                className={`color-wrapper ${
+                  activeColor === "green" ? "active" : ""
+                }`}
+                id="green"
+                onClick={(e) => handleColorClick(e, "green")}
+              >
                 <label className="green-color">
                   <input type="radio" name="product-color" />
                 </label>
               </div>
-              <div className="color-wrapper">
+              <div
+                className={`color-wrapper ${
+                  activeColor === "purple" ? "active" : ""
+                }`}
+                id="purple"
+                onClick={(e) => handleColorClick(e, "purple")}
+              >
                 <label className="purple-color">
                   <input type="radio" name="product-color" />
                 </label>
@@ -67,11 +108,41 @@ const Info = () => {
               <span>Size</span>
             </div>
             <div className="values-list">
-              <span className="active">XS</span>
-              <span>S</span>
-              <span>M</span>
-              <span>L</span>
-              <span>XL</span>
+              <span
+                id="XS"
+                className={`${activeSize === "XS" ? "active" : ""}`}
+                onClick={(e) => handleSizeClick(e, "XS")}
+              >
+                XS
+              </span>
+              <span
+                id="S"
+                className={`${activeSize === "S" ? "active" : ""}`}
+                onClick={(e) => handleSizeClick(e, "S")}
+              >
+                S
+              </span>
+              <span
+                id="M"
+                className={`${activeSize === "M" ? "active" : ""}`}
+                onClick={(e) => handleSizeClick(e, "M")}
+              >
+                M
+              </span>
+              <span
+                id="L"
+                className={`${activeSize === "L" ? "active" : ""}`}
+                onClick={(e) => handleSizeClick(e, "L")}
+              >
+                L
+              </span>
+              <span
+                id="XL"
+                className={`${activeSize === "XL" ? "active" : ""}`}
+                onClick={(e) => handleSizeClick(e, "XL")}
+              >
+                XL
+              </span>
             </div>
           </div>
           <div className="cart-button">
