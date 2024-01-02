@@ -31,6 +31,11 @@ PrevBtn.propTypes = {
 
 const Products = () => {
   const [products] = useState(ProductsData);
+  //contextten önce kullanıyorduk
+  // const [cartItems, setCartItems] = useState([]);
+
+  // console.log(cartItems);
+  // // console.log(cartItems.length);
 
   const sliderSettings = {
     dots: false,
@@ -67,8 +72,8 @@ const Products = () => {
         <div className="product-wrapper product-carousel">
           {/* react slick kullanimi */}
           <Slider {...sliderSettings}>
-            {products.map((item) => (
-              <ProductItem product={item} key={item.id} />
+            {products.map((product) => (
+              <ProductItem productItem={product} key={product.id} />
             ))}
           </Slider>
         </div>
