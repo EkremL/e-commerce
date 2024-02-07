@@ -15,6 +15,8 @@ const app = express(); //tüm server bu app üzerinde gerçekleşecek
 const port = 5000;
 //dotenv içerisine ulaşma ve config
 const dotenv = require("dotenv");
+//status kodlarını görmek için morganı kurduk ve import ediyoruz  örn: GET /api/categories 200 60.940 ms - 407
+const logger = require("morgan");
 
 dotenv.config();
 //artık connect işlemini dotenv içindeki değişken ile yapabiliriz
@@ -45,8 +47,12 @@ const connect = async () => {
 // });
 
 //!MIDDLEWARES
+//morgan
+app.use(logger("dev"));
+//verileri jsona parse etme
 app.use(express.json());
 
+//*-------------------------------------------------------------------------------------------------
 //artik main route kullanacağız yukardakiler örnekti
 app.use("/api", mainRoute);
 

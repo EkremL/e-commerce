@@ -4,6 +4,22 @@ const router = express.Router();
 //veritabanına kaydetmek için modeli import ediyoruz
 const Category = require("../models/Category.js");
 
+//!Tüm kategorileri getirme (Read-All) (GET)
+// router.get("/", async (req, res) => {
+//   res.send("Kategoriler getirildi");
+// });
+
+router.get("/", async (req, res) => {
+  try {
+    const categories = await Category.find();
+
+    res.status(200).json(categories);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 //!Kategori oluşturma (CREATE)
 router.post("/", async (req, res) => {
   try {
@@ -25,9 +41,23 @@ router.post("/", async (req, res) => {
   }
 });
 
-//!Tüm kategorileri getirme (Read-All) (GET)
-router.get("/", async (req, res) => {
-  res.send("Kategoriler getirildi");
+//!Belirli bir kategoriyi getirme
+
+router.get("/:categoryId", async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId;
+
+    try {
+      const category = await Category.findById(categoryId);
+      res.status(200).json(category);
+    } catch (error) {
+      console.log(error);
+      res.status(404).json({ error: "Category not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 //common js ile export etme
