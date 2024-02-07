@@ -44,6 +44,9 @@ const connect = async () => {
 //   res.send("This is Api Route");
 // });
 
+//!MIDDLEWARES
+app.use(express.json());
+
 //artik main route kullanacağız yukardakiler örnekti
 app.use("/api", mainRoute);
 
