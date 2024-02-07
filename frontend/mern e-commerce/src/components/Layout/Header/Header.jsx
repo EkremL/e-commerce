@@ -86,7 +86,7 @@ function Header({ setIsSearchShow }) {
                       Shop
                       <i className="bi bi-chevron-down"></i>
                     </Link>
-                    <div className="menu-dropdown-wrapper">
+                    {/* <div className="menu-dropdown-wrapper">
                       <div className="menu-dropdown-megamenu">
                         <div className="megamenu-links">
                           <div className="megamenu-products">
@@ -186,7 +186,7 @@ function Header({ setIsSearchShow }) {
                           </a>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </li>
                   <li className="menu-list-item">
                     <Link
