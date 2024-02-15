@@ -60,5 +60,52 @@ router.get("/:categoryId", async (req, res) => {
   }
 });
 
+//! Kategori güncelleme (UPDATE)
+
+router.put("/:categoryId", async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId;
+    // const { name, img } = req.body; //1. yöntem
+    const updates = req.body; //2. yöntem
+
+    //hata
+    const existingCategory = Category.findById(categoryId);
+    if (!existingCategory) {
+      res.status(404).json({ error: "Category not found" });
+    }
+
+    const updatedCategory = await Category.findByIdAndUpdate(
+      categoryId,
+      // { name, img }, //1. yöntem
+      updates, //2. yöntem
+      //istek atınca yeni yani güncellenmiş değeri göndermek için new: true yapıyoruz
+      { new: true }
+    );
+    res.status(200).json(updatedCategory);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//! Kategori silme (DELETE)
+
+router.delete("/:categoryId", async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId;
+
+    const deletedCategory = await Category.findByIdAndDelete(categoryId);
+
+    if (!deletedCategory) {
+      res.status(404).json({ error: "Category not found" });
+    }
+
+    res.status(200).json(deletedCategory);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 //common js ile export etme
 module.exports = router;
