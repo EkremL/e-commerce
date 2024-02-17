@@ -15,12 +15,11 @@ const generateRandomAvatar = () => {
 //? const defaultAvatar = generateRandomAvatar(); //burada çağırsaydık hep aynı değer gelecekti
 
 //! Kullanici oluşturma (Create - Register)
-
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    //!random avatar fonksiyonunu çağırma
+    //?random avatar fonksiyonunu çağırma
     //burada çağırmamızın sebebi her istek attığımızda farklı değer gelebilmesidir. Yukarda çağırsaydık 1 kere oluşturulacak ve hep aynı değer gelecekti.
     const defaultAvatar = generateRandomAvatar();
 
@@ -44,6 +43,38 @@ router.post("/register", async (req, res) => {
     res.status(201).json({
       message: "Kayıt başarılı",
       newUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//! Kullanici Girişi (Login)
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    //? e-mail check
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid E-mail or Password" });
+    }
+
+    //? password check
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    //1. parametre kullanıcının gönderdiği yani aldığımız değer,
+    //2.parametre veritabanındaki kayıtlı şifre   bunları karşılaştırıp duruma göre hata verdiriyoruz
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid E-mail or Password" });
+    }
+
+    res.status(200).json({
+      id: user._id,
+      email: user.email,
+      username: user.username,
+      role: user.role,
+      avatar: user.avatar,
     });
   } catch (error) {
     console.log(error);
