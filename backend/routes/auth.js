@@ -4,15 +4,29 @@ const User = require("../models/User.js");
 //bcrypt import ediyoruz
 const bcrypt = require("bcryptjs");
 
+//!Generate random avatar
+
+const generateRandomAvatar = () => {
+  const randomAvatar = Math.floor(Math.random() * 71); //1-70 arası istersek 70 + 1 diyecektik
+  //*pravatar.cc deki resimler 0 ile 70 arasında değer aldığı için
+  //*biz de 0 ile 70 arasında sayı üretmesini istedik
+  return `https://i.pravatar.cc/300?img=${randomAvatar}`;
+};
+//? const defaultAvatar = generateRandomAvatar(); //burada çağırsaydık hep aynı değer gelecekti
+
 //! Kullanici oluşturma (Create - Register)
 
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
+    //!random avatar fonksiyonunu çağırma
+    //burada çağırmamızın sebebi her istek attığımızda farklı değer gelebilmesidir. Yukarda çağırsaydık 1 kere oluşturulacak ve hep aynı değer gelecekti.
+    const defaultAvatar = generateRandomAvatar();
+
     //? aynı e-mail var mı checkleme işlemi
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
       return res.status(400).json({ error: "Email already in use" });
     }
 
@@ -23,6 +37,7 @@ router.post("/register", async (req, res) => {
       username,
       email,
       password: hashedPassword, //modelin içinde password ismi olduğu için hashedpassword'u bu şekilde gönderiyoruz
+      avatar: defaultAvatar,
     });
 
     await newUser.save();
