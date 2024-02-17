@@ -46,15 +46,15 @@ const connect = async () => {
 //   res.send("This is Api Route");
 // });
 
-//*-------------------------------------------------------------------------------------------------
-//artik main route kullanacağız yukardakiler örnekti
-app.use("/api", mainRoute);
-
 //!MIDDLEWARES
 //morgan
 app.use(logger("dev"));
 //verileri jsona parse etme
 app.use(express.json());
+
+//*-------------------------------------------------------------------------------------------------
+//artik main route kullanacağız yukardakiler örnekti
+app.use("/api", mainRoute);
 
 //port dinleme
 app.listen(port, () => {

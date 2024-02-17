@@ -1,7 +1,7 @@
 const express = require("express");
 //route dosyalarını inşa edebilmek icin;
 const router = express.Router();
-//veritabanına kaydetmek için modeli import ediyoruz
+//modele ulaşmak için modeli import ediyoruz
 const Category = require("../models/Category.js");
 
 //!Tüm kategorileri getirme (Read-All) (GET)

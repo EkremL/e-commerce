@@ -6,7 +6,7 @@ const CategorySchema = mongoose.Schema(
   {
     //required zorunluluğu belirtiyor
     name: { type: String, required: true },
-    img: { type: String, required: true },
+    img: { type: String, required: [true, "Please enter img"] }, //farkli bir kullanim
   },
   //timestamps ürünü oluşturduğumuzda tarih verecek
   { timestamps: true }
