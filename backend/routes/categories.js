@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//!Belirli bir kategoriyi getirme
+//!Belirli bir kategoriyi getirme (GET SINGLE)
 
 router.get("/:categoryId", async (req, res) => {
   try {
