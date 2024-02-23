@@ -11,6 +11,9 @@ function Header({ setIsSearchShow }) {
   // pathları bulmak için;
   const { pathname } = useLocation();
 
+  //çıkış yapma işlemi
+  const user = localStorage.getItem("user");
+
   return (
     <header>
       <div className="global-notification">
@@ -223,9 +226,9 @@ function Header({ setIsSearchShow }) {
                 >
                   <i className="bi bi-search"></i>
                 </button>
-                <a href="#">
+                {/* <a href="#">
                   <i className="bi bi-heart"></i>
-                </a>
+                </a> */}
                 <div className="header-cart">
                   <Link to={"/cart"} className="header-cart-link">
                     <i className="bi bi-bag"></i>
@@ -234,6 +237,19 @@ function Header({ setIsSearchShow }) {
                     </span>
                   </Link>
                 </div>
+                {user && (
+                  <button
+                    className="search-button"
+                    onClick={() => {
+                      if (window.confirm("Are you sure you want to leave?")) {
+                        localStorage.removeItem("user");
+                        window.location.href = "/";
+                      }
+                    }}
+                  >
+                    <i className="bi bi-box-arrow-right"></i>
+                  </button>
+                )}
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [formData, setFormData] = useState({
     username: "",
@@ -23,7 +24,7 @@ const Register = () => {
     // console.log("kullanici olusturuldu.");
     try {
       //postmanda kullandigimiz urlye istek atiyoruz
-      const response = await fetch(`http://localhost:5000/api/auth/register`, {
+      const response = await fetch(`${apiUrl}/api/auth/register`, {
         method: "POST", //method tipini belirtiyoruz
         headers: {
           "Content-Type": "application/json",
