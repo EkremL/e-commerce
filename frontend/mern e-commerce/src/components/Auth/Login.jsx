@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 
 const Login = () => {
+  const [loginWith, setLoginWith] = useState("email"); // loginWith tanımı
+
   const navigate = useNavigate();
   //.env kullanimi
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -12,6 +14,14 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const handleLoginWithChange = () => {
+    // setLoginWith(e.target.value);
+    // e.target.checked = false;
+    setLoginWith((prevLoginWith) =>
+      prevLoginWith === "email" ? "username" : "email"
+    );
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,6 +58,50 @@ const Login = () => {
     }
   };
 
+  // return (
+  //   <div className="account-column">
+  //     <h2>Login</h2>
+  //     <form onSubmit={handleLogin}>
+  //       <div>
+  //         <label>
+  //           <span>
+  //             {/* Email address  */}
+  //             {loginWith === "email" ? "Email address" : "Username"}
+  //             <span className="required">*</span>
+  //           </span>
+  //           <input
+  //             type="text"
+  //             name={loginWith === "email" ? "email" : "username"}
+  //             onChange={handleLoginWithChange}
+  //           />
+  //         </label>
+  //       </div>
+  //       <div>
+  //         <label>
+  //           <span>
+  //             Password <span className="required">*</span>
+  //           </span>
+  //           <input
+  //             type="password"
+  //             name="password"
+  //             onChange={handleInputChange}
+  //           />
+  //         </label>
+  //       </div>
+  //       <p className="remember">
+  //         <label>
+  //           <input type="checkbox" />
+  //           <span>Remember me</span>
+  //         </label>
+  //         <button className="btn btn-sm">Login</button>
+  //       </p>
+  //       <a href="#" className="form-link">
+  //         Lost your password?
+  //       </a>
+  //     </form>
+  //   </div>
+  // );
+
   return (
     <div className="account-column">
       <h2>Login</h2>
@@ -55,9 +109,28 @@ const Login = () => {
         <div>
           <label>
             <span>
-              Email address <span className="required">*</span>
+              Login with {loginWith !== "email" ? "Email address" : "Username"}{" "}
+              <input
+                className=""
+                type="checkbox"
+                name="loginWith"
+                value={
+                  loginWith === "email" ? formData.email : formData.username
+                }
+                checked={loginWith !== "email"}
+                onChange={handleLoginWithChange}
+              />
             </span>
-            <input type="text" name={`email`} onChange={handleInputChange} />
+            <span>
+              {loginWith === "email" ? "Email address" : "Username"}{" "}
+              <span className="required">*</span>
+            </span>
+            <input
+              type="text"
+              name={loginWith === "email" ? "email" : "username"}
+              value={loginWith === "email" ? formData.email : formData.username}
+              onChange={handleInputChange}
+            />
           </label>
         </div>
         <div>
@@ -68,10 +141,33 @@ const Login = () => {
             <input
               type="password"
               name="password"
+              value={formData.password}
               onChange={handleInputChange}
             />
           </label>
         </div>
+        {/* <div>
+          <label>
+            <input
+              type="radio"
+              name="loginWith"
+              value="email"
+              checked={loginWith === "email"}
+              onChange={handleLoginWithChange}
+            />
+            Email
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="loginWith"
+              value="username"
+              checked={loginWith === "username"}
+              onChange={handleLoginWithChange}
+            />
+            Username
+          </label>
+        </div> */}
         <p className="remember">
           <label>
             <input type="checkbox" />

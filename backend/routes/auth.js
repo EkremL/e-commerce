@@ -53,22 +53,20 @@ router.post("/register", async (req, res) => {
 //! Kullanici Girişi (Login)
 router.post("/login", async (req, res) => {
   try {
-    console.log(req.body); // Gelen isteği yazdır
-    const { email, password } = req.body;
+    // console.log(req.body); // Gelen isteği yazdır
+    const { email, username, password } = req.body;
 
-    //? e-mail check
+    // //? e-mail check
     const user = await User.findOne({
-      email,
+      $or: [{ email }, { username }],
     });
-    // const name = await User.findOne({
-    //   username,
-    // });
 
     if (!user) {
       return res.status(401).json({ error: "Invalid E-mail or Password" });
     }
-    // if (!name) {
-    //   res.status(401).json({ error: "Invalid E-mail or Password" });
+
+    // if (!userr) {
+    //   return res.status(401).json({ error: "Invalid E-mail or Password" });
     // }
 
     //? password check
