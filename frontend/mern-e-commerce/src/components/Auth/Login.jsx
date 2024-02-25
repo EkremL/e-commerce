@@ -15,7 +15,7 @@ const Login = () => {
     password: "",
   });
 
-  const handleLoginWithChange = (e) => {
+  const handleLoginWithChange = () => {
     // setLoginWith(e.target.value);
     // e.target.checked = false;
     setLoginWith((prevLoginWith) =>
@@ -58,50 +58,6 @@ const Login = () => {
     }
   };
 
-  // return (
-  //   <div className="account-column">
-  //     <h2>Login</h2>
-  //     <form onSubmit={handleLogin}>
-  //       <div>
-  //         <label>
-  //           <span>
-  //             {/* Email address  */}
-  //             {loginWith === "email" ? "Email address" : "Username"}
-  //             <span className="required">*</span>
-  //           </span>
-  //           <input
-  //             type="text"
-  //             name={loginWith === "email" ? "email" : "username"}
-  //             onChange={handleLoginWithChange}
-  //           />
-  //         </label>
-  //       </div>
-  //       <div>
-  //         <label>
-  //           <span>
-  //             Password <span className="required">*</span>
-  //           </span>
-  //           <input
-  //             type="password"
-  //             name="password"
-  //             onChange={handleInputChange}
-  //           />
-  //         </label>
-  //       </div>
-  //       <p className="remember">
-  //         <label>
-  //           <input type="checkbox" />
-  //           <span>Remember me</span>
-  //         </label>
-  //         <button className="btn btn-sm">Login</button>
-  //       </p>
-  //       <a href="#" className="form-link">
-  //         Lost your password?
-  //       </a>
-  //     </form>
-  //   </div>
-  // );
-
   return (
     <div className="account-column">
       <h2>Login</h2>
@@ -117,7 +73,7 @@ const Login = () => {
                 value={
                   loginWith === "email" ? formData.email : formData.username
                 }
-                checked={loginWith !== "email"}
+                checked={loginWith === "email" ? !"username" : !loginWith}
                 onChange={handleLoginWithChange}
               />
             </span>
