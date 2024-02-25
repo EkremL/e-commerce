@@ -15,7 +15,7 @@ const Login = () => {
     password: "",
   });
 
-  const handleLoginWithChange = () => {
+  const handleLoginWithChange = (e) => {
     // setLoginWith(e.target.value);
     // e.target.checked = false;
     setLoginWith((prevLoginWith) =>
