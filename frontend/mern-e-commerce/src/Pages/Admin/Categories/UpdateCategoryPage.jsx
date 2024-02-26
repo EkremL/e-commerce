@@ -61,7 +61,7 @@ const UpdateCategoryPage = () => {
     } finally {
       setLoading(false);
     }
-  }, [apiUrl]);
+  }, [apiUrl, form, categoryId]);
 
   useEffect(() => {
     fetchSingleCategory();
