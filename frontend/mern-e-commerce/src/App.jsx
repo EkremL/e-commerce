@@ -8,8 +8,11 @@ import ContactPage from "./Pages/ContactPage";
 import BlogDetailsPage from "./Pages/BlogDetailsPage";
 import BlogPage from "./Pages/BlogPage";
 import ProductDetailsPage from "./Pages/ProductDetailsPage";
-import AdminUserPage from "./Pages/admin/AdminUserPage";
+import UserPage from "./Pages/Admin/UserPage";
+import CategoryPage from "./Pages/Admin/Categories/CategoryPage";
 import "./App.css";
+import UpdateCategoryPage from "./Pages/Admin/Categories/UpdateCategoryPage";
+import CreateCategoryPage from "./Pages/Admin/Categories/CreateCategoryPage";
 
 function App() {
   return (
@@ -25,7 +28,13 @@ function App() {
         <Route path="/blog/:id" element={<BlogDetailsPage />} />
         {/* adminden sonra gelcek tüm routeleri kapsamak için böyle bir kullanim tercih ettik */}
         <Route path="/admin/*">
-          <Route path="users" element={<AdminUserPage />} />
+          <Route path="users" element={<UserPage />} />
+          <Route path="categories" element={<CategoryPage />} />
+          <Route
+            path="categories/update/:id"
+            element={<UpdateCategoryPage />}
+          />
+          <Route path="categories/create" element={<CreateCategoryPage />} />
         </Route>
       </Routes>
     </>
