@@ -8,6 +8,7 @@ import ContactPage from "./Pages/ContactPage";
 import BlogDetailsPage from "./Pages/BlogDetailsPage";
 import BlogPage from "./Pages/BlogPage";
 import ProductDetailsPage from "./Pages/ProductDetailsPage";
+import AdminUserPage from "./Pages/admin/AdminUserPage";
 import "./App.css";
 
 function App() {
@@ -22,6 +23,10 @@ function App() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="/blog/:id" element={<BlogDetailsPage />} />
+        {/* adminden sonra gelcek tüm routeleri kapsamak için böyle bir kullanim tercih ettik */}
+        <Route path="/admin/*">
+          <Route path="users" element={<AdminUserPage />} />
+        </Route>
       </Routes>
     </>
   );
