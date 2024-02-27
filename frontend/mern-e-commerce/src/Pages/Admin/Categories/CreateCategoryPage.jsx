@@ -22,15 +22,15 @@ const CreateCategoryPage = () => {
         body: JSON.stringify(values),
       });
       if (response.ok) {
-        message.success("Categorie is created successfully");
+        message.success("Category is created successfully");
         //içini temizlemek için
         form.resetFields();
         navigate("/admin/categories");
       } else {
-        message.error("There was an error creating");
+        message.error("There was an error creating category");
       }
     } catch (error) {
-      console.log("Categorie create error", error);
+      console.log("Category create error", error);
     } finally {
       setLoading(false);
     }

@@ -11,7 +11,7 @@ const ProductSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     img: [{ type: String, required: true }], //product detailde birden fazla image olduğu için array belirtiyoruz
-    revies: [ReviewSchema],
+    reviews: [ReviewSchema],
     description: { type: String, required: true },
     colors: [{ type: String, required: true }],
     sizes: [{ type: String, required: true }],
