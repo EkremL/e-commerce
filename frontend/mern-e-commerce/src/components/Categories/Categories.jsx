@@ -1,8 +1,9 @@
-import React from "react";
-import "./Categories.css";
+import React, { useState } from "react";
 import CategorieItem from "./CategorieItem";
+import "./Categories.css";
 
 const Categories = () => {
+  const [categories, setCategories] = useState([]);
   return (
     <section className="categories">
       <div className="container">

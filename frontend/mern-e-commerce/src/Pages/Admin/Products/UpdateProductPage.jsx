@@ -1,31 +1,56 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Button, Form, Input, message, Spin, InputNumber, Select } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-const CreateProductPage = () => {
+const UpdateProductPage = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
+
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
-  //antd ile butona tıklandıktan sonra içini temizleme
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const params = useParams();
+  const productId = params.id;
 
-  //?kategorileri çekme
+  // console.log(singleProduct);
+
+  //?kategorileri çekme yine birden fazla istek atılcak ve promise kullanılacak
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${apiUrl}/api/categories`);
+        const [categoriesResponse, singleproductsResponse] = await Promise.all([
+          fetch(`${apiUrl}/api/categories`),
+          fetch(`${apiUrl}/api/products/${productId}`),
+        ]);
 
-        if (response.ok) {
-          const data = await response.json();
-          setCategories(data);
-        } else {
+        if (!categoriesResponse.ok || !singleproductsResponse.ok) {
           message.error("Çekme işlemi başarisiz");
+          return;
+        }
+        const [categoriesData, singleproductData] = await Promise.all([
+          categoriesResponse.json(),
+          singleproductsResponse.json(),
+        ]);
+
+        setCategories(categoriesData);
+
+        //forma dataları dolu halde getirme
+        if (singleproductData) {
+          form.setFieldsValue({
+            name: singleproductData.name,
+            current: singleproductData.price.current,
+            discount: singleproductData.price.discount,
+            description: singleproductData.description,
+            img: singleproductData.img.join("\n"),
+            colors: singleproductData.colors.join("\n"),
+            sizes: singleproductData.sizes.join("\n"),
+            category: singleproductData.category,
+          });
         }
       } catch (error) {
         console.log("Çekme hatasi", error);
@@ -33,24 +58,19 @@ const CreateProductPage = () => {
         setLoading(false);
       }
     };
-    fetchCategories();
-  }, [apiUrl]);
-  // console.log(categories);
+
+    fetchData();
+  }, [apiUrl, productId, form]);
 
   //?bilgileri alma
   const onFinish = async (values) => {
-    // console.log(values);
-    //!modelde array olarak tanımladığımız linkleri,colorsları ve sizeleri ayırıp arraya atma ve aralarında boşluk varsa mapla boşlukları yok etme
     const imgLinks = values.img.split("\n").map((x) => x.trim());
-    // console.log(imgLinks);
     const colors = values.colors.split("\n").map((x) => x.trim());
-    // console.log(colors);
     const sizes = values.sizes.split("\n").map((x) => x.trim());
-    // console.log(sizes);
     setLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/api/products`, {
-        method: "POST",
+      const response = await fetch(`${apiUrl}/api/products/${productId}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -67,14 +87,13 @@ const CreateProductPage = () => {
         }),
       });
       if (response.ok) {
-        message.success("Product is created successfully");
-        form.resetFields();
+        message.success("Product is updated successfully");
         navigate("/admin/products");
       } else {
-        message.error("There was an error creating product");
+        message.error("There was an error updating product");
       }
     } catch (error) {
-      console.log("Product create error", error);
+      console.log("Product update error", error);
     } finally {
       setLoading(false);
     }
@@ -85,7 +104,6 @@ const CreateProductPage = () => {
       <Form form={form} name="basic" layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="Product Name"
-          //nameler database ile aynı isimde olmali
           name="name"
           rules={[
             {
@@ -107,9 +125,6 @@ const CreateProductPage = () => {
           ]}
         >
           <Select>
-            {/* <Select.Option value="Smartphone" key={"Smartphone"}>
-              Smartphone
-            </Select.Option> bu manuel kategori girmeydi biz veritabanından maplayacağız*/}
             {categories.map((category) => (
               <Select.Option value={category._id} key={category._id}>
                 {category.name}
@@ -199,13 +214,12 @@ const CreateProductPage = () => {
             autoSize={{ minRows: 4 }}
           />
         </Form.Item>
-
         <Button type="primary" htmlType="submit">
-          Create
+          Update
         </Button>
       </Form>
     </Spin>
   );
 };
 
-export default CreateProductPage;
+export default UpdateProductPage;

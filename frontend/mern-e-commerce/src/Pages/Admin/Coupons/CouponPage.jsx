@@ -2,7 +2,7 @@ import { Table, message, Button, Popconfirm, Space } from "antd";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CategoryPage = () => {
+const CouponPage = () => {
   const [dataSource, setdataSource] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -10,22 +10,16 @@ const CategoryPage = () => {
 
   const columns = [
     {
-      title: "Category Image",
-      dataIndex: "img",
-      key: "img",
-      render: (imgSrc) => (
-        <img
-          src={imgSrc}
-          alt="Image"
-          style={{ width: "100px", borderRadius: "50%" }}
-        />
-      ),
+      title: "Coupon Code",
+      dataIndex: "code",
+      key: "code",
+      render: (code) => <b>{code}</b>,
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <b>{text}</b>,
+      title: "Discount Percent",
+      dataIndex: "discountPercent",
+      key: "discountPercent",
+      render: (text) => <span>%{text}</span>,
     },
     {
       title: "Oluşturma Tarihi",
@@ -40,16 +34,16 @@ const CategoryPage = () => {
         <Space size={"middle"}>
           <Button
             type="primary"
-            onClick={() => navigate(`/admin/categories/update/${record._id}`)}
+            onClick={() => navigate(`/admin/coupons/update/${record._id}`)}
           >
             Update
           </Button>
           <Popconfirm
-            title="Delete the category"
-            description="Are you sure to delete this category?"
+            title="Delete the coupon"
+            description="Are you sure to delete this coupon?"
             okText="Yes"
             cancelText="No"
-            onConfirm={() => deleteCategory(record._id)}
+            onConfirm={() => deleteCoupon(record._id)}
           >
             <Button type="primary" danger>
               Delete
@@ -60,10 +54,10 @@ const CategoryPage = () => {
     },
   ];
 
-  const fetchCategories = useCallback(async () => {
+  const fetchCoupons = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/api/categories`);
+      const response = await fetch(`${apiUrl}/api/coupons`);
 
       if (response.ok) {
         const data = await response.json();
@@ -78,15 +72,15 @@ const CategoryPage = () => {
     }
   }, [apiUrl]);
 
-  const deleteCategory = async (categoryId) => {
+  const deleteCoupon = async (couponId) => {
     try {
-      const response = await fetch(`${apiUrl}/api/categories/${categoryId}`, {
+      const response = await fetch(`${apiUrl}/api/coupons/${couponId}`, {
         method: "DELETE",
       });
 
       if (response.ok) {
-        message.success("Kategori başarıyla silindi");
-        fetchCategories();
+        message.success("Kupon başarıyla silindi");
+        fetchCoupons();
       } else {
         message.error("Silme işlemi başarisiz");
       }
@@ -96,8 +90,8 @@ const CategoryPage = () => {
   };
 
   useEffect(() => {
-    fetchCategories();
-  }, [fetchCategories]);
+    fetchCoupons();
+  }, [fetchCoupons]);
   return (
     <Table
       dataSource={dataSource}
@@ -108,4 +102,4 @@ const CategoryPage = () => {
   );
 };
 
-export default CategoryPage;
+export default CouponPage;
