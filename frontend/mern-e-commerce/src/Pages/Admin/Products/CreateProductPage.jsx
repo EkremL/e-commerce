@@ -60,6 +60,7 @@ const CreateProductPage = () => {
             current: values.current,
             discount: values.discount,
           },
+
           colors,
           sizes,
           img: imgLinks,
