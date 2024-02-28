@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import productsData from "../../../data.json";
+// import productsData from "../../../data.json";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
 import "./Gallery.css";
@@ -42,10 +42,12 @@ PrevBtn.propTypes = {
   onClick: PropTypes.func,
 };
 
-const Gallery = () => {
+const Gallery = ({ singleProduct }) => {
   //data.json dan resmi çektik
   const [activeImg, setActiveImg] = useState({
-    img: productsData[0].img.singleImage,
+    // img: productsData[0].img.singleImage,
+    //!artik veritabanından fetch eiyourz
+    img: singleProduct.img[0],
     imgIndex: 0,
   });
 
@@ -61,26 +63,34 @@ const Gallery = () => {
   return (
     <div className="product-gallery">
       <div className="single-image-wrapper">
-        <img src={`/${activeImg.img}`} id="single-image" alt="" />
+        {/* <img src={`/${activeImg.img}`} id="single-image" alt="" /> */}
+        {/* !fetch sonrasi / 'ı kaldırdık */}
+        <img src={`${activeImg.img}`} id="single-image" alt="" />
       </div>
       <div className="product-thumb">
         <div className="glide__track" data-glide-el="track">
           <ol className="gallery-thumbs glide__slides">
             <Slider {...sliderSettings}>
-              {productsData[0].img.thumbs.map((itemImg, index) => (
+              {/* {productsData[0].img.thumbs.map((itemImg, index) => ( */}
+              {/* //fetch sonrasi */}
+              {singleProduct.img.map((itemImg, index) => (
                 <li
                   className="glide__slide glide__slide--active"
                   key={index}
                   onClick={() =>
                     setActiveImg({
-                      img: productsData[0].img.thumbs[index],
+                      // img: productsData[0].img.thumbs[index],
+                      //!fetch sonrasi
+                      img: itemImg,
                       imgIndex: index,
                     })
                   }
                 >
                   <img
-                    src={`/${itemImg}`}
+                    // src={`/${itemImg}`}
                     //route işleminde resmi alabilmek icin basina geçici olarak / ekledik
+                    //fetchten sonra kaldirdik
+                    src={`${itemImg}`}
                     alt=""
                     className={`img-fluid ${
                       activeImg.imgIndex === index ? "active" : ""
@@ -97,3 +107,7 @@ const Gallery = () => {
 };
 
 export default Gallery;
+
+Gallery.propTypes = {
+  singleProduct: PropTypes.object,
+};

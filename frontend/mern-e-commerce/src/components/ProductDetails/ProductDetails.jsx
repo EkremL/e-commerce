@@ -1,11 +1,12 @@
 import React from "react";
-import "./ProductDetails.css";
 import BreadCrumb from "./BreadCrumb/BreadCrumb";
 import Gallery from "./Gallery/Gallery";
+import PropTypes from "prop-types";
 import Info from "./Info/Info";
 import Tabs from "./Tabs/Tabs";
+import "./ProductDetails.css";
 
-const ProductDetails = () => {
+const ProductDetails = ({ singleProduct }) => {
   return (
     <section className="single-product">
       <div className="container">
@@ -13,8 +14,8 @@ const ProductDetails = () => {
           <BreadCrumb />
           <div className="single-content">
             <main className="site-main">
-              <Gallery />
-              <Info />
+              <Gallery singleProduct={singleProduct} />
+              <Info singleProduct={singleProduct} />
             </main>
           </div>
           <Tabs />
@@ -25,3 +26,7 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+ProductDetails.propTypes = {
+  singleProduct: PropTypes.object,
+};

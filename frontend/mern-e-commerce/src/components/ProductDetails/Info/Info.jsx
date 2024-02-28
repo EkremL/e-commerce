@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import "./Info.css";
+import { CartContext } from "../../../context/CartProvider";
 
-const Info = () => {
+const Info = ({ singleProduct }) => {
   const [activeColor, setActiveColor] = useState("blue");
   const [activeSize, setActiveSize] = useState("XS");
+  const { addToCart, cartItems } = useContext(CartContext);
+  const quantityRef = useRef();
 
   const handleColorClick = (e, color) => {
     e.preventDefault();
@@ -15,9 +19,19 @@ const Info = () => {
     setActiveSize(size);
   };
 
+  const originalPrice = singleProduct.price.current;
+  const discountPercentage = singleProduct.price.discount;
+
+  const discountedPrice =
+    originalPrice - (originalPrice * discountPercentage) / 100;
+
+  const filteredCart = cartItems.find(
+    (cartItem) => cartItem._id === singleProduct._id
+  );
+
   return (
     <div className="product-info">
-      <h1 className="product-title">Ridley High Waist</h1>
+      <h1 className="product-title">{singleProduct.name}</h1>
       <div className="product-review">
         <ul className="product-star">
           <li>
@@ -39,13 +53,14 @@ const Info = () => {
         <span>2 reviews</span>
       </div>
       <div className="product-price">
-        <s className="old-price">$165</s>
-        <strong className="new-price">$100</strong>
+        <s className="old-price">${originalPrice.toFixed(2)}</s>
+        <strong className="new-price">${discountedPrice.toFixed(2)}</strong>
       </div>
-      <p className="product-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
+      {/* react quill ile ürün açıklaması yazılınca html tagları açıklamada görünüyor bunu engellemek için dangerouslySetInnerHTML kullaniyoruz ve descriptionu taglar arasına değil içine belirtiyoruz */}
+      <p
+        className="product-description"
+        dangerouslySetInnerHTML={{ __html: singleProduct.description }}
+      ></p>
       <form className="variations-form">
         <div className="variations">
           <div className="colors">
@@ -53,7 +68,8 @@ const Info = () => {
               <span>Color</span>
             </div>
             <div className="colors-wrapper">
-              <div
+              {/* artik verileri dinamik olarak cekicez */}
+              {/* <div
                 className={`color-wrapper ${
                   activeColor === "blue" ? "active" : ""
                 }`}
@@ -100,7 +116,24 @@ const Info = () => {
                 <label className="purple-color">
                   <input type="radio" name="product-color" />
                 </label>
-              </div>
+              </div> */}
+              {singleProduct.colors.map((color, index) => (
+                <div
+                  className={`color-wrapper ${
+                    activeColor === color ? "active" : ""
+                  }`}
+                  key={index}
+                >
+                  <label
+                    style={{
+                      backgroundColor: `#${color}`,
+                    }}
+                    onClick={(e) => handleColorClick(e, color)}
+                  >
+                    <input type="radio" name="product-color" />
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
           <div className="values">
@@ -108,7 +141,8 @@ const Info = () => {
               <span>Size</span>
             </div>
             <div className="values-list">
-              <span
+              {/* statik veriler */}
+              {/* <span
                 id="XS"
                 className={`${activeSize === "XS" ? "active" : ""}`}
                 onClick={(e) => handleSizeClick(e, "XS")}
@@ -142,15 +176,46 @@ const Info = () => {
                 onClick={(e) => handleSizeClick(e, "XL")}
               >
                 XL
+              </span> */}
+              {/* dinamik (fetch) edilen veriler */}
+              <span
+                id="XL"
+                className={`${activeSize === "XL" ? "active" : ""}`}
+                onClick={(e) => handleSizeClick(e, "XL")}
+              >
+                XL
               </span>
+              {singleProduct.sizes.map((size, index) => (
+                <span
+                  className={`${activeSize === size ? "active" : ""}`}
+                  key={index}
+                  onClick={(e) => handleSizeClick(e, size)}
+                >
+                  {size}
+                </span>
+              ))}
             </div>
           </div>
           <div className="cart-button">
-            <input type="number" defaultValue="1" min="1" id="quantity" />
+            <input
+              type="number"
+              defaultValue="1"
+              min="1"
+              id="quantity"
+              ref={quantityRef}
+            />
             <button
               className="btn btn-lg btn-primary"
               id="add-to-cart"
               type="button"
+              disabled={filteredCart}
+              onClick={() =>
+                addToCart({
+                  ...singleProduct,
+                  price: discountedPrice,
+                  quantity: parseInt(quantityRef.current.value),
+                })
+              }
             >
               Add to cart
             </button>
@@ -191,3 +256,7 @@ const Info = () => {
 };
 
 export default Info;
+
+Info.propTypes = {
+  singleProduct: PropTypes.object,
+};
