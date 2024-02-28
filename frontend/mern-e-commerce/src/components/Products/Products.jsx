@@ -1,8 +1,9 @@
 import ProductItem from "./ProductItem";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import ProductsData from "../../data.json";
+// import ProductsData from "../../data.json";
 import Slider from "react-slick";
+import { message } from "antd";
 import "./Products.css";
 
 //dosya içinde butonlar için komponent oluşturduk
@@ -30,12 +31,33 @@ PrevBtn.propTypes = {
 };
 
 const Products = () => {
-  const [products] = useState(ProductsData);
+  const [products, setProducts] = useState([]); //eskiden içinde ProductsData vardı artık fetch işlemi yapacağımız için boş array yaptık yani geçici veri olan data.json'dan değil veritabanından çekiyoruz
   //contextten önce kullanıyorduk
   // const [cartItems, setCartItems] = useState([]);
 
   // console.log(cartItems);
   // // console.log(cartItems.length);
+
+  //!API FETCH
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/products`);
+
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data);
+        } else {
+          message.error("Çekme işlemi başarisiz");
+        }
+      } catch (error) {
+        console.log("Çekme hatasi", error);
+      }
+    };
+    fetchProducts();
+  }, [apiUrl]);
 
   const sliderSettings = {
     dots: false,
@@ -73,7 +95,7 @@ const Products = () => {
           {/* react slick kullanimi */}
           <Slider {...sliderSettings}>
             {products.map((product) => (
-              <ProductItem productItem={product} key={product.id} />
+              <ProductItem productItem={product} key={product._id} />
             ))}
           </Slider>
         </div>

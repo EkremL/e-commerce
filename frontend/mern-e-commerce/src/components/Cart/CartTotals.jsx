@@ -8,7 +8,9 @@ const CartTotals = () => {
   //fiyat hesaplama
   //map ile toplam fiyatları yeni diziye atamış olduk
   const cartItemTotals = cartItems.map((item) => {
-    const itemTotal = item.price.newPrice * item.quantity;
+    // const itemTotal = item.price.newPrice * item.quantity;
+    //!fetch sonrasi
+    const itemTotal = item.price * item.quantity;
 
     return itemTotal;
   });
