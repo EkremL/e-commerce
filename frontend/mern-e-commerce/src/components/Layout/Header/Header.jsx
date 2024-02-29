@@ -207,9 +207,7 @@ function Header({ setIsSearchShow }) {
                       className={`menu-link ${
                         pathname === "/contact" && "active"
                       }`}
-                    >
-                      Contact
-                    </Link>
+                    ></Link>
                   </li>
                 </ul>
               </nav>
