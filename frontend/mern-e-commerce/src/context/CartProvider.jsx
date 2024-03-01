@@ -11,7 +11,14 @@ const CartProvider = ({ children }) => {
   );
   //her sayfa yenilendiğinde boş array ile başlatacağı için değerler kaybolacak ve resetlenecek bu yüzden değer varsa getir yoksa boş arrayla başlat diyoruz
   //   console.log("cart items", cartItems);
-
+  const calculateQuantity = () => {
+    let total = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      total += cartItems[i].quantity;
+    }
+    return total;
+  };
+  console.log(calculateQuantity());
   //*localstorage içinde değeri tutma
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -36,11 +43,7 @@ const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-      }}
+      value={{ calculateQuantity, cartItems, addToCart, removeFromCart }}
     >
       {children}
     </CartContext.Provider>

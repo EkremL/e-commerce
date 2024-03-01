@@ -6,7 +6,7 @@ import "./Header.css";
 
 function Header({ setIsSearchShow }) {
   //sepetteki rakamı context ile arttırma
-  const { cartItems } = useContext(CartContext);
+  const { calculateQuantity } = useContext(CartContext);
 
   // pathları bulmak için;
   const { pathname } = useLocation();
@@ -231,7 +231,8 @@ function Header({ setIsSearchShow }) {
                   <Link to={"/cart"} className="header-cart-link">
                     <i className="bi bi-bag"></i>
                     <span className="header-cart-count">
-                      {cartItems.length}
+                      {/* {cartItems.length} */}
+                      {calculateQuantity()}
                     </span>
                   </Link>
                 </div>

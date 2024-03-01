@@ -12,19 +12,22 @@ const Reviews = ({ active, singleProduct }) => {
           <h3>2 reviews for Basic Colored Sweatpants With Elastic Hems</h3>
           <div className="comments">
             <ol className="comment-list">
-              {singleProduct.revies.map((item, index) => (
+              {singleProduct.reviews.map((item, index) => (
                 <ReviewItem key={index} item={item} />
               ))}
             </ol>
           </div>
         </>
       ) : (
-        <h3>İlk yorum yapan siz olun </h3>
+        <>
+          <h3>İlk yorum yapan siz olun </h3>
+          <hr />
+        </>
       )}
 
       <div className="review-form-wrapper">
         <h2>Add a review</h2>
-        <ReviewForm />
+        <ReviewForm singleProduct={singleProduct} />
       </div>
     </div>
   );
