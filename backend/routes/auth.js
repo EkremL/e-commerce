@@ -40,10 +40,7 @@ router.post("/register", async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({
-      message: "Kayıt başarılı",
-      newUser,
-    });
+    res.status(201).json(newUser);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -64,10 +61,6 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "Invalid E-mail or Password" });
     }
-
-    // if (!userr) {
-    //   return res.status(401).json({ error: "Invalid E-mail or Password" });
-    // }
 
     //? password check
     const isPasswordValid = await bcrypt.compare(password, user.password);

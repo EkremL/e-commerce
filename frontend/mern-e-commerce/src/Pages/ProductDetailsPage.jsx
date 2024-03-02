@@ -10,8 +10,8 @@ const ProductDetailsPage = () => {
   // console.log(productId); //alternatif kullanim
 
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
-  const [singleProduct, setsingleProduct] = useState(null);
-
+  const [singleProduct, setSingleProduct] = useState(null);
+  //yorum eklendiğinde anında sayfaya yansımasını istiyorsak setsingleProductu alt komponente aktarmamız gerekiyor
   useEffect(() => {
     const fetchSingleProduct = async () => {
       try {
@@ -22,7 +22,7 @@ const ProductDetailsPage = () => {
           throw new Error("Verileri getirme hatası");
         }
         const data = await response.json();
-        setsingleProduct(data);
+        setSingleProduct(data);
       } catch (error) {
         console.log("Çekme hatasi", error);
       }
@@ -32,7 +32,10 @@ const ProductDetailsPage = () => {
 
   // console.log(singleProduct);
   return singleProduct ? (
-    <ProductDetails singleProduct={singleProduct} />
+    <ProductDetails
+      singleProduct={singleProduct}
+      setSingleProduct={setSingleProduct}
+    />
   ) : (
     <p>Product Loading</p>
   );

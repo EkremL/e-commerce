@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 
-const ReviewSchema = mongoose.Schema({
-  text: { type: String, required: true },
-  rating: { type: Number, required: true },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, //usere ulaştığımız için ilişkili veritabanı (relationship)
-  //ref ile id yi nerden aldığımıız belirtiyoruz ve bunun için model adını yazıyoruz
-});
+const ReviewSchema = mongoose.Schema(
+  {
+    text: { type: String, required: true },
+    rating: { type: Number, required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, //usere ulaştığımız için ilişkili veritabanı (relationship)
+    //ref ile id yi nerden aldığımıız belirtiyoruz ve bunun için model adını yazıyoruz
+  },
+  { timestamps: true }
+);
 
 const ProductSchema = mongoose.Schema(
   {

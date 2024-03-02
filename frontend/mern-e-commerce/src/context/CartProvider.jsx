@@ -18,7 +18,7 @@ const CartProvider = ({ children }) => {
     }
     return total;
   };
-  console.log(calculateQuantity());
+  // console.log(calculateQuantity());
   //*localstorage içinde değeri tutma
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));

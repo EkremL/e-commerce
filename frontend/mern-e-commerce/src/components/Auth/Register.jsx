@@ -32,7 +32,7 @@ const Register = () => {
         body: JSON.stringify(formData), //formdatadaki bilgileri jsona çevirip gönderiyoruz
       });
 
-      console.log(response);
+      // console.log(response);
       //denediğimizde cors hatası alacağız bunun için cors kütüphanesini indirip backende import ediyoruz.
       //?CORS: Bir web tarayıcısının bir web sayfasında yüklü kaynakların başka bir alan adından yüklenmesine veya kullanılmasına izin vermediği bir kontrol alanı ve güvenlik önlemidir.Corsu kurduktan sonra hata ortadan kalkacak ve 201 status kodunu göreceğiz.
       if (response.ok) {

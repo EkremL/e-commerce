@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { message } from "antd";
 
-const ReviewForm = ({ singleProduct }) => {
+const ReviewForm = ({ singleProduct, setSingleProduct }) => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
@@ -18,6 +18,9 @@ const ReviewForm = ({ singleProduct }) => {
   // console.log(review);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (rating === 0) {
+      return message.warning("Puan seçiniz!");
+    }
     const formData = {
       //modele uygun şekilde datayı alacağız
       reviews: [
@@ -25,11 +28,13 @@ const ReviewForm = ({ singleProduct }) => {
         {
           text: review,
           rating: parseInt(rating),
-          user: user.id, //localden aldığımız userin idsine ulaşıyoruz
+          user: user.id || user._id, //localden aldığımız userin idsine ulaşıyoruz
+          // user: user.id,
         },
       ],
     };
 
+    console.log(formData);
     try {
       const res = await fetch(`${apiUrl}/api/products/${singleProduct._id}`, {
         method: "PUT",
@@ -44,12 +49,13 @@ const ReviewForm = ({ singleProduct }) => {
       }
 
       const data = await res.json();
-      console.log(data);
-      //formu sıfırlama
-      setRating(0); //bunun işlemesi için textareaya value verdik
+      // console.log(data);
+      //!Yukarıdan aldığımı setsingleProduct ile anlık olarak güncelliyoruz artık anında sayfamıza yorum eklenecek
+      setSingleProduct(data);
       setReview("");
-      console.log(formData);
-      message.success("Review is added successfully");
+      setRating(0); //aşağıda value ekledik
+      message.success("Yorum başarıyla eklendi.");
+      // console.log(formData);
     } catch (error) {
       console.log(error);
       message.error("There was an error adding review");
@@ -148,4 +154,5 @@ export default ReviewForm;
 
 ReviewForm.propTypes = {
   singleProduct: PropTypes.object,
+  setSingleProduct: PropTypes.func,
 };
