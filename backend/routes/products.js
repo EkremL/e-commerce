@@ -85,5 +85,23 @@ router.delete("/:productId", async (req, res) => {
   }
 });
 
+//! Product Search Routes
+router.get("/search/:productName", async (req, res) => {
+  try {
+    const productName = req.params.productName;
+    const products = await Product.find({
+      name: {
+        //?regex belli bir arama kelimesini bulmak için kullanilir yani product modelin içindeki name'ye göre arayacak
+        $regex: productName,
+        $options: "i", //? burada kücük harf büyük harf zorunluluğu yok diyoruz
+      },
+    });
+    res.status(200).json(products);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 //common js ile export etme
 module.exports = router;
