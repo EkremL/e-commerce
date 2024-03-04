@@ -18,6 +18,7 @@ import UpdateProductPage from "./Pages/Admin/Products/UpdateProductPage";
 import CouponPage from "./Pages/Admin/Coupons/CouponPage";
 import CreateCouponPage from "./Pages/Admin/Coupons/CreateCouponPage";
 import UpdateCouponPage from "./Pages/Admin/Coupons/UpdateCouponPage";
+import SuccessPage from "./Pages/SuccessPage";
 import "./App.css";
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="/blog/:id" element={<BlogDetailsPage />} />
+        <Route path="/success" element={<SuccessPage />} />
         {/* adminden sonra gelcek tüm routeleri kapsamak için böyle bir kullanim tercih ettik */}
         <Route path="/admin/*">
           <Route path="users" element={<UserPage />} />

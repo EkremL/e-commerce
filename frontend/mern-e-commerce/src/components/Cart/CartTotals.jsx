@@ -1,9 +1,17 @@
 import React, { useContext, useState } from "react";
 import { CartContext } from "../../context/CartProvider";
+import { message } from "antd";
+import { loadStripe } from "@stripe/stripe-js";
 
 const CartTotals = () => {
   const [fastCargoChecked, setFastCargoChecked] = useState(false);
   const { cartItems } = useContext(CartContext);
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
+
+  const stripePublicKey = import.meta.env.VITE_API_STRIPE_PUBLIC_KEY;
 
   //fiyat hesaplama
   //map ile toplam fiyatları yeni diziye atamış olduk
@@ -25,6 +33,46 @@ const CartTotals = () => {
   const Total = fastCargoChecked
     ? (subTotals + cargoFee).toFixed(2)
     : subTotals.toFixed(2);
+
+  //!payment
+  const handlePayment = async () => {
+    if (!user) {
+      return message.info("Ödeme yapabilmek için giriş yapmalısınız!");
+    }
+    //ürün, kullanıcı ve kargo bilgilerini ödeme ekranına göndereceğiz
+    const body = {
+      products: cartItems,
+      user: user,
+      cargoFee: fastCargoChecked ? cargoFee : 0,
+    };
+    // console.log(body);
+    //?reactla stripe'ı kullanabilmek için @stripe/stripe.js kuruyoruz
+    try {
+      const stripe = await loadStripe(stripePublicKey); //public keyi buraya yazıyoruz, güvenli olması için .env'ye yazıyoruz
+      //daha sonra apiye istek atıyoruz
+      const res = await fetch(`${apiUrl}/api/payment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        return message.error("Ödeme işlemi başarısız oldu!");
+      }
+
+      const session = await res.json();
+      const result = await stripe.redirectToCheckout({ sessionId: session.id });
+
+      if (result.error) {
+        //hatayı stripenin kendi paketi göndereceği için bu şekilde yazdık
+        throw new Error(result.error.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="cart-totals">
@@ -67,7 +115,9 @@ const CartTotals = () => {
         </tbody>
       </table>
       <div className="checkout">
-        <button className="btn btn-lg">Proceed to checkout</button>
+        <button className="btn btn-lg" onClick={handlePayment}>
+          Proceed to checkout
+        </button>
       </div>
     </div>
   );
