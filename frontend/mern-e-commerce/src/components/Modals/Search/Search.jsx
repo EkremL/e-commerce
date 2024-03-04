@@ -41,7 +41,7 @@ const Search = ({ isSearchShow, setIsSearchShow }) => {
     }
   };
 
-  console.log(searchResults);
+  // console.log(searchResults);
   return (
     <div className={`modal-search ${isSearchShow ? "show" : ""}`}>
       <div className="modal-wrapper">

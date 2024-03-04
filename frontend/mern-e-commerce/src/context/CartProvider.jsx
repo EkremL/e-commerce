@@ -43,7 +43,13 @@ const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ calculateQuantity, cartItems, addToCart, removeFromCart }}
+      value={{
+        calculateQuantity,
+        cartItems,
+        addToCart,
+        removeFromCart,
+        setCartItems,
+      }} //setcartıtemsi kupon kodunu uygulayabilmek için gönderiyoruz
     >
       {children}
     </CartContext.Provider>
