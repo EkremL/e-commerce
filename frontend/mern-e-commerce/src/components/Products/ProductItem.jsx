@@ -15,6 +15,9 @@ const ProductItem = ({ productItem }) => {
   const filteredCart = cartItems.find(
     (cartItem) => cartItem._id === productItem._id
   );
+  const user = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null;
 
   //calculate discount prices
 
@@ -68,20 +71,24 @@ const ProductItem = ({ productItem }) => {
         {/* <span className="product-discount">-{productItem.discount}%</span> */}
         <span className="product-discount">-{productItem.price.discount}%</span>
         <div className="product-links">
-          <button
-            className="add-to-cart"
-            // onClick={() => addToCart(productItem)}
-            //fetch sonrasi
-            onClick={() =>
-              addToCart({
-                ...productItem,
-                price: discountedPrice,
-              })
-            }
-            disabled={filteredCart}
-          >
-            <i className="bi bi-basket-fill"></i>
-          </button>
+          {user && (
+            <button
+              className="add-to-cart"
+              // onClick={() => addToCart(productItem)}
+              //fetch sonrasi
+
+              onClick={() =>
+                addToCart({
+                  ...productItem,
+                  price: discountedPrice,
+                })
+              }
+              disabled={filteredCart}
+            >
+              <i className="bi bi-basket-fill"></i>
+            </button>
+          )}
+
           <button>
             <i className="bi bi-heart-fill"></i>
           </button>

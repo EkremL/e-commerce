@@ -19,6 +19,8 @@ import CouponPage from "./Pages/Admin/Coupons/CouponPage";
 import CreateCouponPage from "./Pages/Admin/Coupons/CreateCouponPage";
 import UpdateCouponPage from "./Pages/Admin/Coupons/UpdateCouponPage";
 import SuccessPage from "./Pages/SuccessPage";
+import OrderPage from "./Pages/Admin/OrderPage";
+import DashboardPage from "./Pages/Admin/DashboardPage";
 import "./App.css";
 
 function App() {
@@ -36,7 +38,9 @@ function App() {
         <Route path="/success" element={<SuccessPage />} />
         {/* adminden sonra gelcek tüm routeleri kapsamak için böyle bir kullanim tercih ettik */}
         <Route path="/admin/*">
+          <Route index element={<DashboardPage />} />
           <Route path="users" element={<UserPage />} />
+          <Route path="orders" element={<OrderPage />} />
           <Route path="categories" element={<CategoryPage />} />
           <Route
             path="categories/update/:id"

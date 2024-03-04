@@ -6,7 +6,7 @@ import "./Header.css";
 
 function Header({ setIsSearchShow }) {
   //sepetteki rakamı context ile arttırma
-  const { calculateQuantity } = useContext(CartContext);
+  const { calculateQuantity, setCartItems } = useContext(CartContext);
 
   // pathları bulmak için;
   const { pathname } = useLocation();
@@ -242,6 +242,8 @@ function Header({ setIsSearchShow }) {
                     onClick={() => {
                       if (window.confirm("Are you sure you want to leave?")) {
                         localStorage.removeItem("user");
+
+                        setCartItems([]);
                         window.location.href = "/";
                       }
                     }}

@@ -1,7 +1,8 @@
 import React, { useContext, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import "./Info.css";
 import { CartContext } from "../../../context/CartProvider";
+
+import "./Info.css";
 
 const Info = ({ singleProduct }) => {
   const [activeColor, setActiveColor] = useState("blue");
@@ -204,6 +205,7 @@ const Info = ({ singleProduct }) => {
               id="quantity"
               ref={quantityRef}
             />
+
             <button
               className="btn btn-lg btn-primary"
               id="add-to-cart"

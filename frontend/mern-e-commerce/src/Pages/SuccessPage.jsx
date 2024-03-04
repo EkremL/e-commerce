@@ -18,11 +18,12 @@ const SuccessPage = () => {
           title="Payment successful!"
           subTitle="Your order is completed."
           extra={[
-            <Link to={"/"} key="home">
+            <Link to={"/"} key={"home"}>
               <Button type="primary">Go to Home Page</Button>
             </Link>,
-
-            <Button key="buy">My Orders</Button>,
+            <a href="/" key={"order"}>
+              <Button key={"buy"}>My Orders</Button>
+            </a>,
           ]}
         />
       </div>
