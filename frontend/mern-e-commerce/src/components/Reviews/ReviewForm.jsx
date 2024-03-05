@@ -133,6 +133,7 @@ const ReviewForm = ({ singleProduct, setSingleProduct }) => {
           rows="10"
           onChange={(e) => setReview(e.target.value)}
           value={review}
+          required
         ></textarea>
       </div>
       <div className="comment-form-cookies">

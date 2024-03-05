@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import productsData from "../../../data.json";
 import PropTypes from "prop-types";
 import Slider from "react-slick";
@@ -47,7 +47,8 @@ const Gallery = ({ singleProduct }) => {
   const [activeImg, setActiveImg] = useState({
     // img: productsData[0].img.singleImage,
     //!artik veritabanından fetch eiyourz
-    img: singleProduct.img[0],
+    // img: singleProduct.img[0],
+    img: "",
     imgIndex: 0,
   });
 
@@ -59,6 +60,10 @@ const Gallery = ({ singleProduct }) => {
     nextArrow: <NextBtn />,
     prevArrow: <PrevBtn />,
   };
+
+  useEffect(() => {
+    setActiveImg({ img: singleProduct.img[0], imgIndex: 0 });
+  }, [singleProduct.img]); //search komponentinde ürüne tıkladığımızda görsellerin değişmesini istediğimiz için yaptık
 
   return (
     <div className="product-gallery">

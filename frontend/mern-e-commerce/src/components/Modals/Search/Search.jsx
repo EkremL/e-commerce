@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { message } from "antd";
+import { Link } from "react-router-dom";
 import "./Search.css";
 
 const Search = ({ isSearchShow, setIsSearchShow }) => {
@@ -96,7 +97,12 @@ const Search = ({ isSearchShow, setIsSearchShow }) => {
                 (
                   resultItem //başlangıç olarak null verdiğimiz için map bunu okuyamıyor biz de ? ile opsiyonellik ekledik
                 ) => (
-                  <a href="#" className="result-item" key={resultItem._id}>
+                  //search productsta istediğimiz ürüne yönlendirme yapmak için Link yaptık
+                  <Link
+                    to={`product/${resultItem._id}`}
+                    className="result-item"
+                    key={resultItem._id}
+                  >
                     <img
                       src={resultItem.img[0]}
                       className="search-thumb"
@@ -109,7 +115,7 @@ const Search = ({ isSearchShow, setIsSearchShow }) => {
                         ${resultItem.price.current.toFixed(2)}
                       </span>
                     </div>
-                  </a>
+                  </Link>
                 )
               )}
           </div>

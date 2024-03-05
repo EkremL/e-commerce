@@ -149,6 +149,22 @@ const AdminLayout = ({ children }) => {
     }
   };
 
+  const getPageTitle = () => {
+    for (const item of menuItems) {
+      if (item.children) {
+        for (const child of item.children) {
+          if (child.path === window.location.pathname) {
+            return child.label;
+          }
+        }
+      } else {
+        if (item.path === window.location.pathname) {
+          return item.label;
+        }
+      }
+    }
+  };
+
   if (userRole === "admin") {
     return (
       <div className="admin-layout">
@@ -176,6 +192,7 @@ const AdminLayout = ({ children }) => {
                   justifyContent: "space-between",
                 }}
               >
+                <h2>{getPageTitle()}</h2>
                 <h2>Admin Paneli</h2>
               </div>
             </Header>

@@ -86,6 +86,7 @@ const Login = () => {
               name={loginWith === "email" ? "email" : "username"}
               value={loginWith === "email" ? formData.email : formData.username}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
@@ -99,6 +100,7 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
+              required
             />
           </label>
         </div>
