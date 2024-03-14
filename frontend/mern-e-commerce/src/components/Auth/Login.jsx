@@ -40,7 +40,7 @@ const Login = () => {
         body: JSON.stringify(formData),
       });
 
-      console.log(response);
+      // console.log(response);
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("user", JSON.stringify(data));

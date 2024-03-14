@@ -21,7 +21,7 @@ function Header({ setIsSearchShow }) {
           <p>
             SUMMER SALE FOR ALL SWIM SUITS AND FREE EXPRESS INTERNATIONAL
             DELIVERY - OFF 50%!
-            <a href="shop.html">SHOP NOW</a>
+            <Link to={"/shop"}>SHOP NOW</Link>
           </p>
         </div>
       </div>
@@ -33,7 +33,7 @@ function Header({ setIsSearchShow }) {
             </div>
             <div className="header-left">
               <Link to={"/"} className="logo">
-                LOGO
+                COUNT&EAT
               </Link>
             </div>
             <div className="header-center" id="sidebar">
@@ -207,7 +207,9 @@ function Header({ setIsSearchShow }) {
                       className={`menu-link ${
                         pathname === "/contact" && "active"
                       }`}
-                    ></Link>
+                    >
+                      Contact
+                    </Link>
                   </li>
                 </ul>
               </nav>
@@ -215,9 +217,11 @@ function Header({ setIsSearchShow }) {
             </div>
             <div className="header-right">
               <div className="header-right-links">
-                <Link to={"/auth"} className="header-account">
-                  <i className="bi bi-person"></i>
-                </Link>
+                {!user && (
+                  <Link to={"/auth"} className="header-account">
+                    <i className="bi bi-person"></i>
+                  </Link>
+                )}
                 <button
                   className="search-button"
                   onClick={() => setIsSearchShow(true)}
